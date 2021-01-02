@@ -1,11 +1,46 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import Grid from '@material-ui/core/Grid';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import Typography from '@material-ui/core/Typography';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Box from '@material-ui/core/Box';
 
 import { auth } from './services/firebase';
-import { login, logout } from './slices/auth';
+import { login, logout, selectUser } from './slices/auth';
+
+import Header from './components/Header';
+import Home from './pages/Home';
+import NotFound from './pages/NotFound';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Notes from './pages/Notes';
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const user = useSelector(selectUser);
+
+  return (
+    <Route
+      {...rest}
+      render={(props) =>
+        user ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/signin',
+              state: { from: props.location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 
 function App() {
   const dispatch = useDispatch();
@@ -23,16 +58,21 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="App">
-      <Grid container justify="center" alignItems="center" spacing={1}>
-        <Grid item>
-          <ThumbUpAltIcon fontSize="large" />
-        </Grid>
-        <Grid item>
-          <Typography variant="h2">It works</Typography>
-        </Grid>
-      </Grid>
-    </div>
+    <Router>
+      <CssBaseline />
+      <Header />
+      <Container maxWidth="sm">
+        <Box pt={1}>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/signin" component={SignIn} />
+            <PrivateRoute path="/notes" component={Notes} />
+            <Route component={NotFound} />
+          </Switch>
+        </Box>
+      </Container>
+    </Router>
   );
 }
 
