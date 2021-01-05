@@ -48,7 +48,12 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        dispatch(login(user));
+        dispatch(
+          login({
+            id: user.uid,
+            email: user.email,
+          })
+        );
       } else {
         dispatch(logout());
       }
@@ -61,7 +66,7 @@ function App() {
     <Router>
       <CssBaseline />
       <Header />
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Box pt={1}>
           <Switch>
             <Route exact path="/" component={Home} />

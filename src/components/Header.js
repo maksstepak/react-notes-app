@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { selectUser } from '../slices/auth';
+import { auth } from '../services/firebase';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const user = useSelector(selectUser);
+  const history = useHistory();
+
+  const handleLogoutClick = async () => {
+    await auth.signOut();
+    history.push('/');
+  };
 
   return (
     <div className={classes.root}>
@@ -52,6 +60,14 @@ const Header = () => {
                 size="small"
               >
                 Notes
+              </Button>
+              <Button
+                startIcon={<ExitToAppIcon />}
+                color="inherit"
+                size="small"
+                onClick={handleLogoutClick}
+              >
+                Sign Out
               </Button>
             </>
           ) : (
