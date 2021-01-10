@@ -1,9 +1,5 @@
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
+import { Grid, Card, CardContent, Typography, Box } from '@material-ui/core';
+import { SentimentVeryDissatisfied as SentimentVeryDissatisfiedIcon } from '@material-ui/icons';
 
 const NotFound = () => {
   return (

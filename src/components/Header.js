@@ -2,18 +2,22 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import {
+  makeStyles,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+} from '@material-ui/core';
+import {
+  Home as HomeIcon,
+  PersonAdd as PersonAddIcon,
+  ExitToApp as ExitToAppIcon,
+  Note as NoteIcon,
+} from '@material-ui/icons';
+
 import { selectUser } from '../slices/auth';
 import { auth } from '../services/firebase';
-
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import NoteIcon from '@material-ui/icons/Note';
 
 const useStyles = makeStyles((theme) => ({
   root: {

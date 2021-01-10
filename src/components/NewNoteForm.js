@@ -9,7 +9,7 @@ import {
   CircularProgress,
   makeStyles,
 } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { AddCircle as AddCircleIcon } from '@material-ui/icons';
 
 import { db } from '../services/firebase';
 import { selectUser } from '../slices/auth';

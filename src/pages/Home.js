@@ -1,6 +1,5 @@
-import Grid from '@material-ui/core/Grid';
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Typography } from '@material-ui/core';
+import { ThumbUpAlt as ThumbUpAltIcon } from '@material-ui/icons';
 
 const Home = () => {
   return (
