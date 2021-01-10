@@ -50,7 +50,7 @@ function App() {
       if (user) {
         dispatch(
           login({
-            id: user.uid,
+            uid: user.uid,
             email: user.email,
           })
         );

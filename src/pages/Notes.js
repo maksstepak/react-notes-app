@@ -1,5 +1,13 @@
+import NewNoteForm from '../components/NewNoteForm';
+import NoteList from '../components/NoteList';
+
 const Notes = () => {
-  return <h2>TODO</h2>;
+  return (
+    <>
+      <NewNoteForm />
+      <NoteList />
+    </>
+  );
 };
 
 export default Notes;
