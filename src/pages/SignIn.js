@@ -88,6 +88,7 @@ const SignIn = () => {
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <TextField
+                        required
                         label="E-mail"
                         value={email}
                         variant="outlined"
@@ -99,6 +100,7 @@ const SignIn = () => {
                     </Grid>
                     <Grid item>
                       <TextField
+                        required
                         label="Password"
                         type="password"
                         value={password}

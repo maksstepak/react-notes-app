@@ -95,6 +95,7 @@ const SignUp = () => {
                   <Grid container direction="column" spacing={1}>
                     <Grid item>
                       <TextField
+                        required
                         label="E-mail"
                         value={email}
                         variant="outlined"
@@ -106,6 +107,7 @@ const SignUp = () => {
                     </Grid>
                     <Grid item>
                       <TextField
+                        required
                         label="Password"
                         type="password"
                         value={password}
@@ -118,6 +120,7 @@ const SignUp = () => {
                     </Grid>
                     <Grid item>
                       <TextField
+                        required
                         label="Confirm Password"
                         type="password"
                         variant="outlined"
