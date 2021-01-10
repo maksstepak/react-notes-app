@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
@@ -6,9 +6,14 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Box from '@material-ui/core/Box';
+
+import {
+  Container,
+  CssBaseline,
+  Box,
+  Grid,
+  CircularProgress,
+} from '@material-ui/core';
 
 import { auth } from './services/firebase';
 import { login, logout, selectUser } from './slices/auth';
@@ -45,6 +50,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 function App() {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -57,28 +64,44 @@ function App() {
       } else {
         dispatch(logout());
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
   }, [dispatch]);
 
-  return (
-    <Router>
-      <CssBaseline />
-      <Header />
-      <Container maxWidth="md">
-        <Box pt={1}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/signin" component={SignIn} />
-            <PrivateRoute path="/notes" component={Notes} />
-            <Route component={NotFound} />
-          </Switch>
-        </Box>
-      </Container>
-    </Router>
-  );
+  if (loading) {
+    return (
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item>
+          <CircularProgress />
+        </Grid>
+      </Grid>
+    );
+  } else {
+    return (
+      <Router>
+        <CssBaseline />
+        <Header />
+        <Container maxWidth="md">
+          <Box pt={1}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/signin" component={SignIn} />
+              <PrivateRoute path="/notes" component={Notes} />
+              <Route component={NotFound} />
+            </Switch>
+          </Box>
+        </Container>
+      </Router>
+    );
+  }
 }
 
 export default App;
