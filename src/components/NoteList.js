@@ -12,6 +12,8 @@ import { db } from '../services/firebase';
 import { selectUser } from '../slices/auth';
 
 import NoteDetails from './NoteDetails';
+import DeleteNoteDialog from './DeleteNoteDialog';
+import EditNoteDialog from './EditNoteDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +29,27 @@ const NoteList = () => {
 
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentNote, setCurrentNote] = useState(null);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [editDialog, setEditDialog] = useState(false);
+
+  const handleDeleteDialogOpen = (note) => {
+    setCurrentNote(note);
+    setDeleteDialog(true);
+  };
+
+  const handleEditDialogOpen = (note) => {
+    setCurrentNote(note);
+    setEditDialog(true);
+  };
+
+  const deleteNote = async (noteId) => {
+    await db.collection('notes').doc(noteId).delete();
+  };
+
+  const editNote = async (noteId, data) => {
+    await db.collection('notes').doc(noteId).update(data);
+  };
 
   useEffect(() => {
     const unsubscribe = db
@@ -60,7 +83,11 @@ const NoteList = () => {
               {notes.map((note) => {
                 return (
                   <Grid item xs={12} sm={6} key={note.id}>
-                    <NoteDetails note={note} />
+                    <NoteDetails
+                      note={note}
+                      handleDeleteDialogOpen={handleDeleteDialogOpen}
+                      handleEditDialogOpen={handleEditDialogOpen}
+                    />
                   </Grid>
                 );
               })}
@@ -70,6 +97,26 @@ const NoteList = () => {
               No notes found
             </Typography>
           )}
+        </>
+      )}
+      {currentNote && (
+        <>
+          <DeleteNoteDialog
+            open={deleteDialog}
+            handleClose={() => {
+              setDeleteDialog(false);
+            }}
+            noteId={currentNote.id}
+            deleteNote={deleteNote}
+          />
+          <EditNoteDialog
+            open={editDialog}
+            handleClose={() => {
+              setEditDialog(false);
+            }}
+            note={currentNote}
+            editNote={editNote}
+          />
         </>
       )}
     </div>
