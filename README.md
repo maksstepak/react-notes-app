@@ -37,3 +37,7 @@ npm start
 # Build for production
 npm run build
 ```
+
+## 🚀 Demo
+
+Check it here: [Notes App](https://boring-benz-7c7627.netlify.app/)
